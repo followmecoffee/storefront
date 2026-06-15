@@ -51,7 +51,7 @@ h1,h2,h3,.serif{font-family:'Playfair Display',serif}
 .cart-btn .ct{background:var(--crimson);color:#fff;font-size:11px;font-weight:700;min-width:18px;height:18px;border-radius:9px;
   display:inline-flex;align-items:center;justify-content:center;padding:0 5px}
 .menu-tog{display:none;background:none;border:0;color:var(--cream);cursor:pointer;padding:6px}
-.menu-tog svg{width:24px;height:24px}
+.menu-tog svg{width:24px;height:24px;pointer-events:none}
 
 /* ===== hero ===== */
 .hero{position:relative;overflow:hidden;text-align:center;
@@ -222,7 +222,7 @@ h1,h2,h3,.serif{font-family:'Playfair Display',serif}
   .swag-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:720px){
-  .nav{position:fixed;top:64px;left:0;right:0;flex-direction:column;gap:0;background:var(--ink);
+  .nav{position:fixed;top:64px;left:0;right:0;flex-direction:column;gap:0;background:var(--ink);z-index:55;
     border-bottom:1px solid var(--line);padding:0;max-height:0;overflow:hidden;transition:max-height .3s;align-items:stretch}
   .nav.on{max-height:340px}
   .nav a{padding:16px 22px;border-bottom:1px solid var(--line)}
@@ -253,7 +253,7 @@ h1,h2,h3,.serif{font-family:'Playfair Display',serif}
       <a href="#swag" onclick="closeNav()">Shop Goods</a>
       <button class="cart-btn" onclick="openCart();closeNav()">Cart <span class="ct" id="navCount">0</span></button>
     </nav>
-    <button class="menu-tog" onclick="toggleNav()" aria-label="Menu">
+    <button type="button" class="menu-tog" id="menuTog" aria-label="Menu" aria-expanded="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
   </div>
@@ -325,4 +325,269 @@ h1,h2,h3,.serif{font-family:'Playfair Display',serif}
         <h3>Coffee that protects a rainforest</h3>
         <p>Indian coffee is grown beneath a living canopy — original jungle trees up to 100 feet tall, intercropped with pepper and cardamom. It yields less than sun-grown farms, but it shelters elephants, hornbills, and the families of smallholders who tend it by hand.</p>
         <div class="stat">Over <b>95%</b> grown by small &amp; marginal farmers &nbsp;·&nbsp; shade-grown, bird-friendly</div>
-      </div
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COFFEE SHOP -->
+<section class="sec" id="coffee">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Shop Coffee</span>
+      <h2>Small-batch. 16&nbsp;oz. Roasted to order.</h2>
+      <p>Whole bean or ground, your choice. Subscribe to any roast and save 10% on every delivery.</p>
+    </div>
+    <div class="grid coffee-grid" id="coffeeGrid"></div>
+  </div>
+</section>
+
+<!-- FREE SHIP STRIP -->
+<section class="ship-strip">
+  <div class="ship-in">
+    <div class="big">Free shipping on <span class="crimson">4 bags or more</span></div>
+    <div class="dis">Free standard shipping applies to orders containing four or more bags of coffee, shipped within the contiguous United States. Orders with fewer than four bags, swag-only orders, and shipments to AK/HI ship at standard calculated rates shown at checkout. Offer may change at any time.</div>
+  </div>
+</section>
+
+<!-- SWAG SHOP -->
+<section class="sec" id="swag">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Shop Goods</span>
+      <h2>Carry it with you</h2>
+      <p>Mugs, travel tumblers, and small reminders for the road. Prices are starting points — easy to adjust as your lineup grows.</p>
+    </div>
+    <div class="grid swag-grid" id="swagGrid"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="halo"><span class="cross"></span></div>
+    <div class="vals">Every Cup. Every Bag. <span>Every Purpose.</span></div>
+    <p class="scr">"Come, follow me," Jesus said, "and I will send you out to fish for people."</p>
+    <div class="ref">— MATTHEW 4:19</div>
+    <div class="bless">Thank You &amp; God Bless</div>
+    <div class="legal">
+      Follow Me Coffee Co. · Roasted in small batches · Ethically sourced from India &amp; Thailand<br>
+      Free shipping applies to orders of 4+ bags within the contiguous U.S. See cart for details.
+    </div>
+  </div>
+</footer>
+
+<!-- CART -->
+<div class="backdrop" id="backdrop" onclick="closeCart()"></div>
+<aside class="drawer" id="drawer" aria-label="Cart">
+  <div class="dr-head">
+    <h3>Your Cart</h3>
+    <button class="dr-x" onclick="closeCart()" aria-label="Close">&times;</button>
+  </div>
+  <div class="progress" id="progress">
+    <div class="msg" id="shipMsg"></div>
+    <div class="bar"><i id="shipBar"></i></div>
+  </div>
+  <div class="items" id="items"></div>
+  <div class="dr-foot">
+    <div class="sumrow"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
+    <div class="sumrow ship"><span>Shipping</span><span id="shipVal">—</span></div>
+    <div class="sumrow total"><span>Total</span><span class="serif" id="total">$0.00</span></div>
+    <button class="co-btn" id="coBtn" onclick="checkout()" disabled>Proceed to Checkout</button>
+    <div class="co-note" id="coNote">Secure checkout. Free shipping on 4+ bags applied automatically.</div>
+  </div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ---------- catalog ----------
+var COFFEE = [
+  {id:'india', name:'India · Western Ghats', roast:'Medium Roast', origin:'Chikmagalur, Karnataka',
+   notes:'Cocoa · black pepper · cardamom',
+   blurb:'Shade-grown beneath a jungle canopy and intercropped with spice. A cup that protects an ecosystem.', price:18.99},
+  {id:'thailand', name:'Thailand · Doi Chang', roast:'Medium-Light Roast', origin:'Chiang Rai Highlands',
+   notes:'Citrus · honey · jasmine',
+   blurb:'Grown on mountains that once held opium fields, now reforested by the hill-tribe families who farm them.', price:18.99},
+  {id:'house', name:'Follow Me · House Blend', roast:'Medium-Dark Roast', origin:'India + Thailand',
+   notes:'Dark caramel · toasted almond · cocoa',
+   blurb:'Our signature blend. Bold enough for the road, smooth enough to linger over with the people you love.', price:18.99}
+];
+var SWAG = [
+  {id:'tumbler', name:'Insulated Travel Tumbler', desc:'20 oz · stainless · 6-hr hot', price:28.00, ic:'tumbler'},
+  {id:'mug', name:'Logo Ceramic Mug', desc:'12 oz · glazed stoneware', price:16.00, ic:'mug'},
+  {id:'camp', name:'Enamel Camp Mug', desc:'For the trail and the tailgate', price:19.00, ic:'mug'},
+  {id:'sleeve', name:'Leather Cup Sleeve', desc:'Full-grain · fits 12–16 oz', price:15.00, ic:'sleeve'},
+  {id:'coaster', name:'Car Cup-Holder Coasters', desc:'Set of 2 · absorbent stone', price:14.00, ic:'coaster'},
+  {id:'cross', name:'Walnut Pocket Cross', desc:'Hand-finished hardwood', price:12.00, ic:'cross'},
+  {id:'keychain', name:'Cross Keychain', desc:'Antique brass finish', price:10.00, ic:'cross'},
+  {id:'stickers', name:'Sticker Pack', desc:'5 weatherproof decals', price:8.00, ic:'sticker'}
+];
+var FREE_SHIP_BAGS = 4;
+
+// ---------- svg icons for swag ----------
+var ICONS = {
+  tumbler:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 3h10l-1 18H8L7 3z"/><path d="M7 8h10"/></svg>',
+  mug:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 5h11v9a4 4 0 01-4 4H9a4 4 0 01-4-4V5z"/><path d="M16 7h2a2 2 0 012 2v1a2 2 0 01-2 2h-2"/></svg>',
+  sleeve:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6h12l-1.2 12H7.2L6 6z"/><path d="M9 10h6"/></svg>',
+  coaster:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="12" r="6"/><circle cx="15" cy="12" r="6"/></svg>',
+  cross:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 2h4v6h6v4h-6v10h-4V12H4V8h6z"/></svg>',
+  sticker:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16v11l-5 5H4z"/><path d="M20 15h-5v5"/></svg>'
+};
+
+var cart = {}; // key -> {type,id,name,grind,sub,unit,qty}
+
+function money(n){return '$'+n.toFixed(2);}
+
+// ---------- render shop ----------
+function renderCoffee(){
+  var html='';
+  for(var i=0;i<COFFEE.length;i++){var c=COFFEE[i];
+    html+='<article class="card">'+
+      '<div class="thumb"><div class="bag">'+
+        '<div class="seal"><div class="cross c"></div><div class="fm">Follow Me</div><div class="co">COFFEE CO.</div></div>'+
+        '<div class="band"></div><div class="wt">NET WT 16 OZ (454g)</div>'+
+      '</div></div>'+
+      '<div class="card-body">'+
+        '<div class="roast">'+c.roast+'</div>'+
+        '<h3>'+c.name+'</h3>'+
+        '<div class="origin">'+c.origin+'</div>'+
+        '<p class="blurb">'+c.blurb+'</p>'+
+        '<div class="notes">Tasting notes: <span>'+c.notes+'</span></div>'+
+        '<div class="opts">'+
+          '<select id="grind-'+c.id+'"><option value="Whole Bean">Whole Bean</option>'+
+          '<option value="Ground · Drip">Ground · Drip</option><option value="Ground · Espresso">Ground · Espresso</option>'+
+          '<option value="Ground · French Press">Ground · French Press</option></select>'+
+        '</div>'+
+        '<label class="sub-row"><input type="checkbox" id="sub-'+c.id+'"> Subscribe &amp; save <b>10%</b></label>'+
+        '<div class="price-row"><div class="price">'+money(c.price)+' <span class="u">/ 16 oz</span></div>'+
+          '<button class="add" id="add-'+c.id+'" onclick="addCoffee(\''+c.id+'\')">Add to Cart</button></div>'+
+      '</div></article>';
+  }
+  document.getElementById('coffeeGrid').innerHTML=html;
+}
+function renderSwag(){
+  var html='';
+  for(var i=0;i<SWAG.length;i++){var s=SWAG[i];
+    html+='<article class="card">'+
+      '<div class="thumb"><div class="swag-ic">'+(ICONS[s.ic]||'')+'</div></div>'+
+      '<div class="card-body">'+
+        '<h3>'+s.name+'</h3>'+
+        '<div class="origin">'+s.desc+'</div>'+
+        '<div class="swag-foot"><div class="price">'+money(s.price)+'</div>'+
+          '<button class="add" id="sadd-'+s.id+'" onclick="addSwag(\''+s.id+'\')">Add</button></div>'+
+      '</div></article>';
+  }
+  document.getElementById('swagGrid').innerHTML=html;
+}
+
+// ---------- cart ops ----------
+function flash(btnId,label){
+  var b=document.getElementById(btnId); if(!b)return;
+  var old=b.textContent; b.textContent=label||'Added \u2713'; b.classList.add('added');
+  setTimeout(function(){b.textContent=old;b.classList.remove('added');},1100);
+}
+function toast(msg){
+  var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('on');
+  clearTimeout(t._t); t._t=setTimeout(function(){t.classList.remove('on');},1900);
+}
+function addCoffee(id){
+  var c=null; for(var i=0;i<COFFEE.length;i++){if(COFFEE[i].id===id)c=COFFEE[i];}
+  var grind=document.getElementById('grind-'+id).value;
+  var sub=document.getElementById('sub-'+id).checked;
+  var unit=sub?Math.round(c.price*0.9*100)/100:c.price;
+  var key='c|'+id+'|'+grind+'|'+(sub?'sub':'one');
+  if(cart[key])cart[key].qty++; else cart[key]={type:'coffee',id:id,name:c.name,grind:grind,sub:sub,unit:unit,qty:1};
+  flash('add-'+id); toast(c.name+' added'); updateCart();
+}
+function addSwag(id){
+  var s=null; for(var i=0;i<SWAG.length;i++){if(SWAG[i].id===id)s=SWAG[i];}
+  var key='s|'+id;
+  if(cart[key])cart[key].qty++; else cart[key]={type:'swag',id:id,name:s.name,grind:'',sub:false,unit:s.price,qty:1};
+  flash('sadd-'+id,'Added \u2713'); toast(s.name+' added'); updateCart();
+}
+function changeQty(key,d){
+  if(!cart[key])return; cart[key].qty+=d;
+  if(cart[key].qty<=0)delete cart[key];
+  updateCart();
+}
+function removeLine(key){delete cart[key];updateCart();}
+
+function coffeeBagCount(){var n=0;for(var k in cart){if(cart[k].type==='coffee')n+=cart[k].qty;}return n;}
+function totalItems(){var n=0;for(var k in cart){n+=cart[k].qty;}return n;}
+function subtotal(){var s=0;for(var k in cart){s+=cart[k].unit*cart[k].qty;}return s;}
+
+function updateCart(){
+  var bags=coffeeBagCount();
+  var free=bags>=FREE_SHIP_BAGS;
+  document.getElementById('navCount').textContent=totalItems();
+
+  // progress
+  var pct=Math.min(100,Math.round(bags/FREE_SHIP_BAGS*100));
+  document.getElementById('shipBar').style.width=pct+'%';
+  var msg;
+  if(free){msg='You\u2019ve unlocked <b>free shipping</b>. \u2713';}
+  else{var left=FREE_SHIP_BAGS-bags;
+    msg='Add <b>'+left+' more bag'+(left===1?'':'s')+'</b> of coffee for free shipping.';}
+  document.getElementById('shipMsg').innerHTML=msg;
+
+  // items
+  var box=document.getElementById('items'); var keys=Object.keys(cart);
+  if(keys.length===0){
+    box.innerHTML='<div class="empty"><span class="cross"></span>Your cart is empty.<br>Pick a roast to begin the journey.</div>';
+  }else{
+    var html='';
+    for(var i=0;i<keys.length;i++){var k=keys[i];var it=cart[k];
+      var thumb=it.type==='coffee'
+        ? '<div class="lt"><div class="cross"></div></div>'
+        : '<div class="lt">'+(ICONS[(swagIcon(it.id))]||'')+'</div>';
+      var meta=it.type==='coffee'
+        ? it.grind+(it.sub?' · <span class="badge">Subscription \u201310%</span>':'')
+        : 'Goods';
+      html+='<div class="line">'+thumb+
+        '<div class="li"><div class="nm">'+it.name+'</div>'+
+          '<div class="meta">'+meta+'</div>'+
+          '<div class="qty"><button onclick="changeQty(\''+k.replace(/'/g,"\\'")+'\',-1)">\u2212</button>'+
+          '<span>'+it.qty+'</span><button onclick="changeQty(\''+k.replace(/'/g,"\\'")+'\',1)">+</button></div>'+
+        '</div>'+
+        '<div class="lp">'+money(it.unit*it.qty)+
+          '<button class="rm" onclick="removeLine(\''+k.replace(/'/g,"\\'")+'\')">Remove</button></div>'+
+      '</div>';
+    }
+    box.innerHTML=html;
+  }
+
+  // totals
+  var sub=subtotal();
+  document.getElementById('subtotal').textContent=money(sub);
+  document.getElementById('total').textContent=money(sub);
+  var sv=document.getElementById('shipVal');
+  if(keys.length===0){sv.innerHTML='—';}
+  else if(free){sv.innerHTML='<b>FREE</b>';}
+  else{sv.textContent='Calculated at checkout';}
+  document.getElementById('coBtn').disabled=keys.length===0;
+}
+function swagIcon(id){for(var i=0;i<SWAG.length;i++){if(SWAG[i].id===id)return SWAG[i].ic;}return '';}
+
+// ---------- drawer / nav ----------
+function openCart(){document.getElementById('drawer').classList.add('on');document.getElementById('backdrop').classList.add('on');}
+function closeCart(){document.getElementById('drawer').classList.remove('on');document.getElementById('backdrop').classList.remove('on');}
+function toggleNav(){var n=document.getElementById('nav');var open=n.classList.toggle('on');
+  document.getElementById('menuTog').setAttribute('aria-expanded',open?'true':'false');}
+function closeNav(){document.getElementById('nav').classList.remove('on');
+  document.getElementById('menuTog').setAttribute('aria-expanded','false');}
+document.getElementById('menuTog').addEventListener('click',toggleNav);
+
+function checkout(){
+  if(totalItems()===0)return;
+  var note=document.getElementById('coNote');
+  var btn=document.getElementById('coBtn');
+  btn.textContent='Order summary ready';
+  note.innerHTML='Payment isn\u2019t connected to this preview yet. When you\u2019re ready, this checkout links to Stripe and your '+totalItems()+'-item order ('+money(subtotal())+') carries straight through.';
+  toast('Checkout ready to connect');
+}
+
+renderCoffee(); renderSwag(); updateCart();
+</script>
+</body>
+</html>
