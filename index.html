@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Follow Me Coffee Co. — Come, Follow Me</title>
+<meta name="description" content="Faith-based, small-batch coffee. Ethically sourced from India and Thailand. Every cup, every bag, every purpose.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14100d; --ink-deep:#0e0a08; --panel:#1d1611; --panel-2:#241a14;
+  --line:#33261d; --crimson:#9b2327; --crimson-br:#c0332f;
+  --gold:#c6a667; --gold-soft:#d9c08a; --cream:#ece0c8;
+  --body:#c8b99c; --muted:#9a896d; --faint:#6f5f49;
+  --r:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Montserrat',sans-serif; color:var(--body); line-height:1.6;
+  background:var(--ink-deep); -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,.serif{font-family:'Playfair Display',serif}
+.wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+.eyebrow{font-size:11px;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold);font-weight:600}
+.crimson{color:var(--crimson-br)}
+
+/* cross motif */
+.cross{position:relative;display:inline-block}
+.cross::before,.cross::after{content:"";position:absolute;background:var(--crimson-br);border-radius:1px}
+.cross::before{left:50%;top:0;width:3px;height:100%;margin-left:-1.5px}
+.cross::after{top:28%;left:50%;width:64%;height:3px;transform:translateX(-50%)}
+
+/* ===== header ===== */
+.hdr{position:sticky;top:0;z-index:60;background:rgba(14,10,8,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hdr-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{display:flex;align-items:center;gap:10px}
+.brand .mk{width:14px;height:19px}
+.brand .nm{font-family:'Playfair Display',serif;font-style:italic;font-size:21px;color:var(--cream);line-height:1}
+.brand .sub{font-size:8px;letter-spacing:3px;color:var(--gold);display:block;font-family:'Montserrat';font-style:normal;margin-top:2px}
+.nav{display:flex;gap:28px;align-items:center}
+.nav a{font-size:13px;letter-spacing:.5px;color:var(--body);transition:color .2s}
+.nav a:hover{color:var(--cream)}
+.cart-btn{display:flex;align-items:center;gap:8px;background:transparent;border:1px solid var(--line);color:var(--cream);
+  padding:9px 14px;border-radius:30px;cursor:pointer;font-family:inherit;font-size:13px;transition:border-color .2s}
+.cart-btn:hover{border-color:var(--gold)}
+.cart-btn .ct{background:var(--crimson);color:#fff;font-size:11px;font-weight:700;min-width:18px;height:18px;border-radius:9px;
+  display:inline-flex;align-items:center;justify-content:center;padding:0 5px}
+.menu-tog{display:none;background:none;border:0;color:var(--cream);cursor:pointer;padding:6px}
+.menu-tog svg{width:24px;height:24px}
+
+/* ===== hero ===== */
+.hero{position:relative;overflow:hidden;text-align:center;
+  background:radial-gradient(130% 95% at 50% -8%,#2a1d15 0%,#1a120d 42%,#0e0a08 100%)}
+.hero-in{padding:78px 22px 70px;max-width:760px;margin:0 auto}
+.hero .halo{width:46px;height:60px;margin:0 auto 22px;position:relative}
+.hero .halo .cross{width:46px;height:60px}
+.hero .halo::after{content:"";position:absolute;inset:-30px;border-radius:50%;
+  background:radial-gradient(circle,rgba(192,51,47,.28),transparent 62%);z-index:-1}
+.hero h1{font-size:clamp(44px,9vw,78px);font-style:italic;color:var(--cream);line-height:.98;font-weight:600}
+.hero .vs{margin-top:14px;font-size:12px;letter-spacing:4px;color:var(--gold);text-transform:uppercase}
+.hero p.lede{margin:24px auto 0;max-width:540px;font-size:16px;color:var(--body)}
+.hero .cta{margin-top:34px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{font-family:inherit;font-size:13.5px;font-weight:600;letter-spacing:.6px;padding:14px 26px;border-radius:30px;
+  cursor:pointer;border:1px solid transparent;transition:transform .15s,background .2s,border-color .2s;display:inline-block}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--crimson);color:#fff}
+.btn-primary:hover{background:var(--crimson-br)}
+.btn-ghost{background:transparent;border-color:var(--line);color:var(--cream)}
+.btn-ghost:hover{border-color:var(--gold)}
+
+/* path divider */
+.path{display:block;width:100%;max-width:760px;margin:0 auto;height:64px}
+.path path{stroke:var(--line);stroke-width:2;fill:none;stroke-dasharray:2 9;stroke-linecap:round}
+.path .fig{fill:var(--gold)}
+
+/* sections */
+.sec{padding:74px 0}
+.sec-head{max-width:680px;margin:0 auto 44px;text-align:center}
+.sec-head h2{font-size:clamp(28px,5vw,40px);color:var(--cream);margin-top:12px;line-height:1.12}
+.sec-head p{margin-top:16px;color:var(--muted);font-size:15px}
+
+/* story trio */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tcard{background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:var(--r);padding:30px 24px;text-align:center}
+.tcard .ic{width:30px;height:38px;margin:0 auto 16px}
+.tcard h3{font-size:21px;color:var(--cream);margin-bottom:9px}
+.tcard p{font-size:14px;color:var(--muted)}
+
+/* journey / origins */
+.journey{background:linear-gradient(180deg,#0e0a08,#150f0b)}
+.origins{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.ocard{position:relative;border:1px solid var(--line);border-radius:var(--r);padding:34px 30px;overflow:hidden;
+  background:linear-gradient(155deg,var(--panel-2) 0%,var(--panel) 70%)}
+.ocard::before{content:"";position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--crimson),var(--gold))}
+.ocard .tag{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);font-weight:600}
+.ocard h3{font-size:26px;color:var(--cream);margin:8px 0 14px}
+.ocard p{font-size:14.5px;color:var(--body)}
+.ocard .stat{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.ocard .stat b{color:var(--gold-soft);font-family:'Playfair Display',serif;font-size:17px}
+
+/* shop */
+.grid{display:grid;gap:18px}
+.coffee-grid{grid-template-columns:repeat(3,1fr)}
+.swag-grid{grid-template-columns:repeat(4,1fr)}
+.card{background:linear-gradient(180deg,var(--panel-2),var(--panel));border:1px solid var(--line);border-radius:var(--r);
+  display:flex;flex-direction:column;overflow:hidden}
+.thumb{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;position:relative;
+  background:radial-gradient(120% 120% at 50% 20%,#241914,#120d0a)}
+.bag{width:46%;height:72%;border-radius:8px 8px 5px 5px;position:relative;
+  background:linear-gradient(165deg,#262019,#15100c);border:1px solid #3a2c20;box-shadow:0 10px 26px rgba(0,0,0,.5)}
+.bag::before{content:"";position:absolute;top:-7px;left:14%;right:14%;height:9px;border-radius:3px;background:#1c1610;border:1px solid #3a2c20}
+.bag .seal{position:absolute;left:50%;top:26%;transform:translateX(-50%);width:62%;border-radius:6px;padding:9px 4px;text-align:center;
+  background:rgba(20,14,10,.6);border:1px solid var(--crimson)}
+.bag .seal .c{width:11px;height:14px;margin:0 auto 4px}
+.bag .seal .fm{font-family:'Playfair Display',serif;font-style:italic;font-size:12px;color:var(--cream);line-height:1}
+.bag .seal .co{font-size:5.5px;letter-spacing:1.5px;color:var(--gold);margin-top:2px}
+.bag .band{position:absolute;left:8%;right:8%;bottom:20%;height:8px;border-radius:2px;background:var(--crimson)}
+.bag .wt{position:absolute;left:0;right:0;bottom:9%;text-align:center;font-size:6px;letter-spacing:1px;color:var(--muted)}
+.swag-ic{width:54%;height:54%;color:var(--gold);opacity:.9}
+.card-body{padding:18px 18px 20px;display:flex;flex-direction:column;flex:1}
+.card-body .roast{font-size:10.5px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600}
+.card-body h3{font-size:19px;color:var(--cream);margin:7px 0 3px}
+.card-body .origin{font-size:12px;color:var(--faint);letter-spacing:.4px}
+.card-body .blurb{font-size:13px;color:var(--muted);margin:11px 0 0}
+.card-body .notes{font-size:12px;color:var(--body);margin-top:11px}
+.card-body .notes span{color:var(--gold-soft)}
+.opts{display:flex;gap:8px;margin-top:15px;flex-wrap:wrap}
+.opts select{flex:1;min-width:110px;background:var(--ink);border:1px solid var(--line);color:var(--cream);
+  border-radius:9px;padding:9px 10px;font-family:inherit;font-size:12.5px}
+.sub-row{display:flex;align-items:center;gap:8px;margin-top:11px;font-size:12.5px;color:var(--body);cursor:pointer;user-select:none}
+.sub-row input{accent-color:var(--crimson);width:15px;height:15px}
+.sub-row b{color:var(--gold-soft)}
+.price-row{display:flex;align-items:baseline;justify-content:space-between;margin-top:16px}
+.price{font-family:'Playfair Display',serif;font-size:24px;color:var(--cream)}
+.price .u{font-size:12px;color:var(--faint);font-family:'Montserrat'}
+.add{background:var(--crimson);color:#fff;border:0;border-radius:10px;padding:11px 16px;font-family:inherit;
+  font-weight:600;font-size:13px;cursor:pointer;transition:background .2s}
+.add:hover{background:var(--crimson-br)}
+.add.added{background:#2e7d4f}
+.swag-foot{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:14px}
+
+/* free ship strip */
+.ship-strip{background:linear-gradient(90deg,#1a120d,#221710,#1a120d);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.ship-in{padding:26px 22px;text-align:center}
+.ship-in .big{font-family:'Playfair Display',serif;font-size:23px;color:var(--cream)}
+.ship-in .big .crimson{font-style:italic}
+.ship-in .dis{margin-top:10px;font-size:11.5px;color:var(--faint);max-width:620px;margin-left:auto;margin-right:auto;line-height:1.6}
+
+/* footer */
+.foot{background:#0c0907;border-top:1px solid var(--line);padding:60px 0 30px;text-align:center}
+.foot .halo{width:34px;height:44px;margin:0 auto 18px}
+.foot .halo .cross{width:34px;height:44px}
+.foot .vals{font-family:'Playfair Display',serif;font-size:clamp(20px,4vw,28px);color:var(--cream);letter-spacing:1px}
+.foot .vals span{color:var(--crimson-br)}
+.foot .scr{font-style:italic;color:var(--muted);max-width:480px;margin:18px auto 0;font-family:'Playfair Display',serif;font-size:15px}
+.foot .ref{font-size:11px;letter-spacing:2px;color:var(--gold);margin-top:10px}
+.foot .bless{font-family:'Playfair Display',serif;font-style:italic;font-size:20px;color:var(--gold-soft);margin-top:30px}
+.foot .legal{margin-top:26px;padding-top:20px;border-top:1px solid var(--line);font-size:11px;color:var(--faint);line-height:1.7}
+
+/* ===== cart drawer ===== */
+.backdrop{position:fixed;inset:0;background:rgba(6,4,3,.6);opacity:0;visibility:hidden;transition:opacity .25s;z-index:90}
+.backdrop.on{opacity:1;visibility:visible}
+.drawer{position:fixed;top:0;right:0;height:100%;width:400px;max-width:92vw;z-index:100;
+  background:var(--ink);border-left:1px solid var(--line);transform:translateX(100%);transition:transform .28s ease;
+  display:flex;flex-direction:column}
+.drawer.on{transform:translateX(0)}
+.dr-head{display:flex;align-items:center;justify-content:space-between;padding:20px 20px 16px;border-bottom:1px solid var(--line)}
+.dr-head h3{font-size:20px;color:var(--cream)}
+.dr-x{background:none;border:0;color:var(--muted);font-size:26px;cursor:pointer;line-height:1}
+.dr-x:hover{color:var(--cream)}
+.progress{padding:16px 20px;border-bottom:1px solid var(--line)}
+.progress .msg{font-size:12.5px;color:var(--body);margin-bottom:9px}
+.progress .msg b{color:var(--gold-soft)}
+.bar{height:7px;border-radius:5px;background:var(--panel-2);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--crimson),var(--gold));transition:width .35s}
+.items{flex:1;overflow-y:auto;padding:8px 20px}
+.empty{text-align:center;color:var(--muted);padding:50px 10px;font-size:14px}
+.empty .cross{width:26px;height:33px;margin:0 auto 16px;display:block}
+.line{display:flex;gap:13px;padding:16px 0;border-bottom:1px solid var(--line)}
+.line .lt{width:54px;height:54px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(120% 120% at 50% 20%,#241914,#120d0a);border:1px solid var(--line)}
+.line .lt .cross{width:11px;height:14px}
+.line .lt svg{width:24px;height:24px;color:var(--gold)}
+.line .li{flex:1;min-width:0}
+.line .li .nm{font-size:14px;color:var(--cream);font-weight:500}
+.line .li .meta{font-size:11.5px;color:var(--faint);margin-top:2px}
+.line .li .meta .badge{color:var(--gold-soft)}
+.qty{display:inline-flex;align-items:center;gap:0;margin-top:9px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.qty button{background:var(--panel-2);border:0;color:var(--cream);width:26px;height:26px;cursor:pointer;font-size:15px}
+.qty button:hover{background:var(--crimson)}
+.qty span{min-width:30px;text-align:center;font-size:13px;color:var(--cream)}
+.line .lp{text-align:right;font-family:'Playfair Display',serif;font-size:15px;color:var(--cream);white-space:nowrap}
+.line .rm{display:block;background:none;border:0;color:var(--faint);font-size:11px;cursor:pointer;margin-top:8px}
+.line .rm:hover{color:var(--crimson-br)}
+.dr-foot{border-top:1px solid var(--line);padding:18px 20px 22px}
+.sumrow{display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:9px;color:var(--body)}
+.sumrow.ship b{color:var(--gold-soft)}
+.sumrow.total{font-size:16px;color:var(--cream);padding-top:11px;border-top:1px solid var(--line);margin-top:4px}
+.sumrow.total .serif{font-family:'Playfair Display',serif;font-size:22px}
+.co-btn{width:100%;margin-top:15px;background:var(--crimson);color:#fff;border:0;border-radius:11px;padding:15px;
+  font-family:inherit;font-weight:600;font-size:14.5px;letter-spacing:.5px;cursor:pointer;transition:background .2s}
+.co-btn:hover{background:var(--crimson-br)}
+.co-btn:disabled{background:var(--panel-2);color:var(--faint);cursor:not-allowed}
+.co-note{font-size:11px;color:var(--faint);text-align:center;margin-top:11px;line-height:1.5}
+
+/* toast */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);z-index:120;
+  background:var(--panel-2);border:1px solid var(--gold);color:var(--cream);padding:13px 22px;border-radius:30px;
+  font-size:13.5px;opacity:0;visibility:hidden;transition:all .25s;box-shadow:0 12px 30px rgba(0,0,0,.5)}
+.toast.on{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
+
+/* ===== responsive ===== */
+@media(max-width:860px){
+  .coffee-grid{grid-template-columns:1fr}
+  .trio{grid-template-columns:1fr}
+  .origins{grid-template-columns:1fr}
+  .swag-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:720px){
+  .nav{position:fixed;top:64px;left:0;right:0;flex-direction:column;gap:0;background:var(--ink);
+    border-bottom:1px solid var(--line);padding:0;max-height:0;overflow:hidden;transition:max-height .3s;align-items:stretch}
+  .nav.on{max-height:340px}
+  .nav a{padding:16px 22px;border-bottom:1px solid var(--line)}
+  .nav .cart-btn{margin:14px 22px;justify-content:center}
+  .menu-tog{display:block}
+  .sec{padding:56px 0}
+  .hero-in{padding:60px 22px 54px}
+}
+@media(max-width:430px){
+  .swag-grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="wrap hdr-in">
+    <a href="#top" class="brand">
+      <span class="cross mk"></span>
+      <span><span class="nm">Follow Me</span><span class="sub">COFFEE&nbsp;CO.</span></span>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#story" onclick="closeNav()">Our Story</a>
+      <a href="#journey" onclick="closeNav()">The Journey</a>
+      <a href="#coffee" onclick="closeNav()">Coffee</a>
+      <a href="#swag" onclick="closeNav()">Shop Goods</a>
+      <button class="cart-btn" onclick="openCart();closeNav()">Cart <span class="ct" id="navCount">0</span></button>
+    </nav>
+    <button class="menu-tog" onclick="toggleNav()" aria-label="Menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-in">
+    <div class="halo"><span class="cross"></span></div>
+    <h1>Come, Follow&nbsp;Me</h1>
+    <div class="vs">Matthew 4:19</div>
+    <p class="lede">Coffee was always meant to be shared — across a table, between people who matter. We roast in small batches so your slow mornings, family devotions, and unhurried conversations have something worth lingering over.</p>
+    <div class="cta">
+      <a href="#coffee" class="btn btn-primary">Shop the Coffee</a>
+      <a href="#story" class="btn btn-ghost">Read Our Story</a>
+    </div>
+  </div>
+  <svg class="path" viewBox="0 0 760 64" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M10 54 C 180 54, 200 14, 380 18 S 600 54, 750 22"/>
+    <circle class="fig" cx="380" cy="18" r="3.4"/>
+  </svg>
+</section>
+
+<!-- STORY -->
+<section class="sec" id="story">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Our Mission</span>
+      <h2>A business built on faith, family, and time well&nbsp;spent</h2>
+      <p>Follow Me Coffee Co. exists to inspire and encourage others through exceptional coffee and the love of Christ. The cup is just the beginning — the point is the people around it.</p>
+    </div>
+    <div class="trio">
+      <div class="tcard">
+        <span class="cross ic"></span>
+        <h3>Faith</h3>
+        <p>Every bag carries the invitation of Matthew 4:19 — a reminder that the best journeys are the ones we're called to walk.</p>
+      </div>
+      <div class="tcard">
+        <span class="cross ic"></span>
+        <h3>Family</h3>
+        <p>We're a family-run roaster. We make what we'd want on our own table, for the people we'd want around it.</p>
+      </div>
+      <div class="tcard">
+        <span class="cross ic"></span>
+        <h3>Time Together</h3>
+        <p>A pour-over takes four minutes. So does a real conversation. We're in the business of giving you a reason to slow down.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOURNEY / ORIGINS -->
+<section class="sec journey" id="journey">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">The Journey In Every Cup</span>
+      <h2>Beans with a redemption story</h2>
+      <p>We source from two origins where coffee didn't just grow an economy — it rewrote one. Knowing the farmer from soil to cup isn't a marketing line for us. It's the whole point.</p>
+    </div>
+    <div class="origins">
+      <div class="ocard">
+        <span class="tag">Thailand · Doi Chang</span>
+        <h3>From poppy fields to coffee farms</h3>
+        <p>In the highlands of Northern Thailand, hill-tribe families once farmed opium to survive. A decades-long effort replaced those fields with arabica and reforested the mountains in the process. The families who were once stateless are now world-class growers — and our partners.</p>
+        <div class="stat">Mountains reforested to grow shade canopy &nbsp;·&nbsp; <b>Direct trade</b> with hill-tribe farmers</div>
+      </div>
+      <div class="ocard">
+        <span class="tag">India · Western Ghats</span>
+        <h3>Coffee that protects a rainforest</h3>
+        <p>Indian coffee is grown beneath a living canopy — original jungle trees up to 100 feet tall, intercropped with pepper and cardamom. It yields less than sun-grown farms, but it shelters elephants, hornbills, and the families of smallholders who tend it by hand.</p>
+        <div class="stat">Over <b>95%</b> grown by small &amp; marginal farmers &nbsp;·&nbsp; shade-grown, bird-friendly</div>
+      </div
